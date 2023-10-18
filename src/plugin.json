@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/master/docs/sources/developers/plugins/plugin.schema.json",
+  "type": "panel",
+  "name": "Waterfall Vis",
+  "id": "hrishikeshrajwade96-waterfallvis-panel",
+  "info": {
+    "keywords": ["panel"],
+    "description": "A plugin to add a visualisation of time taken by different processes to run precision in milliseconds",
+    "author": {
+      "name": "Hrishikeshrajwade96"
+    },
+    "logos": {
+      "small": "img/logo.svg",
+      "large": "img/logo.svg"
+    },
+    "links": [],
+    "screenshots": [],
+    "version": "%VERSION%",
+    "updated": "%TODAY%"
+  },
+  "dependencies": {
+    "grafanaDependency": ">=10.0.3",
+    "plugins": []
+  }
+}
