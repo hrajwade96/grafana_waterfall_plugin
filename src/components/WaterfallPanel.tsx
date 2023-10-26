@@ -24,16 +24,16 @@ export class WaterfallPanel extends PureComponent<Props> {
   }
 
   handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    var file = e.target.files?.[0];
+    let file = e.target.files?.[0];
     if (!file) {
       return;
     }
 
-    var reader = new FileReader();
+    let reader = new FileReader();
     reader.onload = (e) => {
-      var contents = e.target?.result;
+      let contents = e.target?.result;
       try {
-        var data = JSON.parse(contents as string);
+        let data = JSON.parse(contents as string);
         this.createTimeline(data);
       } catch (e) {
         alert('Invalid JSON file');
@@ -46,7 +46,7 @@ export class WaterfallPanel extends PureComponent<Props> {
   handleCollapsibleClick = () => {
     const collapsible = document.getElementsByClassName('collapsible')[0];
     collapsible.classList.toggle("active");
-    var content = collapsible.nextElementSibling as HTMLElement;
+    let content = collapsible.nextElementSibling as HTMLElement;
     if (content.style.display === "block") {
       content.style.display = "none";
     } else {
@@ -66,10 +66,10 @@ export class WaterfallPanel extends PureComponent<Props> {
   };
 
   createTimeline = (itemsData: any[]) => {
-    var container = document.getElementById("visualization");
-    var items = new vis.DataSet(itemsData);
+    let container = document.getElementById("visualization");
+    let items = new vis.DataSet(itemsData);
 
-    var options = {
+    let options = {
       format: {
         minorLabels: {
           millisecond: 's.SSS',
@@ -86,17 +86,17 @@ export class WaterfallPanel extends PureComponent<Props> {
       }
     };
 
-    var timeline = new vis.Timeline(container, items, options);
-    var diff;
+    let timeline = new vis.Timeline(container, items, options);
+    let diff;
 
     timeline.on('rangechange', function () {
-      var range = timeline.getWindow();
+      let range = timeline.getWindow();
       itemsData.forEach(function (item) {
-        var start = new Date(item.start).getTime();
-        var end = new Date(item.end).getTime();
+        let start = new Date(item.start).getTime();
+        let end = new Date(item.end).getTime();
         if (start >= range.start && end <= range.end) {
           diff = end - start; // Calculate the difference in milliseconds
-          var element = timeline.itemSet.items[item.id].dom.box;
+          let element = timeline.itemSet.items[item.id].dom.box;
           element.setAttribute("title", item.content + " (" + formatDateTimeWithMilliseconds(new Date(item.start)).toLocaleString() + " - " + formatDateTimeWithMilliseconds(new Date(item.end)).toLocaleString() + '\nduration is ' + diff + 'ms' + ")");
         }
       });
