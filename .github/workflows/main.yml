@@ -6,6 +6,9 @@ on:
       - 'main' 
     tags:
       - 'v1.0.0' # Run workflow on version tags, e.g. v1.0.0.
+      
+permissions:
+  contents: write
 
 jobs:
   package-source:
