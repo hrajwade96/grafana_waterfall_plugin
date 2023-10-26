@@ -12,6 +12,15 @@ export class WaterfallPanel extends PureComponent<Props> {
 
   componentDidMount() {
     // Here, you might want to set up additional event listeners or fetch initial data
+    const { data } = this.props;
+    let sample = ''+data;
+    console.log(sample);
+    // The 'data' prop will contain the time series or table data.
+    // You need to parse this data to a format that your visualization understands.
+    //const itemsData = parseData(data);
+  
+    // Now you can create the timeline with this data
+   // this.createTimeline(itemsData);
   }
 
   handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,7 +97,7 @@ export class WaterfallPanel extends PureComponent<Props> {
         if (start >= range.start && end <= range.end) {
           diff = end - start; // Calculate the difference in milliseconds
           var element = timeline.itemSet.items[item.id].dom.box;
-          element.setAttribute("title", item.content + " (" + formatDateTimeWithMilliseconds(new Date(item.start)).toLocaleString() + " - " + formatDateTimeWithMilliseconds(new Date(item.end)).toLocaleString() + 'duration is' + diff + ")");
+          element.setAttribute("title", item.content + " (" + formatDateTimeWithMilliseconds(new Date(item.start)).toLocaleString() + " - " + formatDateTimeWithMilliseconds(new Date(item.end)).toLocaleString() + '\nduration is ' + diff + 'ms'+")");
         }
       });
     });
