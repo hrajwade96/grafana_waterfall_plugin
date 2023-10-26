@@ -3,7 +3,7 @@ import { PanelProps } from '@grafana/data';
 import { SimpleOptions } from 'types';
 import * as vis from 'vis-timeline.js';
 
-interface Props extends PanelProps<SimpleOptions> {}
+interface Props extends PanelProps<SimpleOptions> { }
 
 export class WaterfallPanel extends PureComponent<Props> {
   state = {
@@ -13,14 +13,14 @@ export class WaterfallPanel extends PureComponent<Props> {
   componentDidMount() {
     // Here, you might want to set up additional event listeners or fetch initial data
     const { data } = this.props;
-    let sample = ''+data;
+    let sample = '' + data;
     console.log(sample);
     // The 'data' prop will contain the time series or table data.
     // You need to parse this data to a format that your visualization understands.
     //const itemsData = parseData(data);
-  
+
     // Now you can create the timeline with this data
-   // this.createTimeline(itemsData);
+    // this.createTimeline(itemsData);
   }
 
   handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +97,7 @@ export class WaterfallPanel extends PureComponent<Props> {
         if (start >= range.start && end <= range.end) {
           diff = end - start; // Calculate the difference in milliseconds
           var element = timeline.itemSet.items[item.id].dom.box;
-          element.setAttribute("title", item.content + " (" + formatDateTimeWithMilliseconds(new Date(item.start)).toLocaleString() + " - " + formatDateTimeWithMilliseconds(new Date(item.end)).toLocaleString() + '\nduration is ' + diff + 'ms'+")");
+          element.setAttribute("title", item.content + " (" + formatDateTimeWithMilliseconds(new Date(item.start)).toLocaleString() + " - " + formatDateTimeWithMilliseconds(new Date(item.end)).toLocaleString() + '\nduration is ' + diff + 'ms' + ")");
         }
       });
     });
@@ -111,16 +111,16 @@ export class WaterfallPanel extends PureComponent<Props> {
         minute: '2-digit',
         second: '2-digit',
         hour12: false,
-    };
+      };
 
       let formattedDate = date.toLocaleString('en-US', options);
 
- // Retrieve milliseconds and convert to a 3-character-long string
- const milliseconds = date.getMilliseconds();
- const millisecondsStr = milliseconds.toString().padStart(3, '0');
+      // Retrieve milliseconds and convert to a 3-character-long string
+      const milliseconds = date.getMilliseconds();
+      const millisecondsStr = milliseconds.toString().padStart(3, '0');
 
- // Append milliseconds to the formatted date
- formattedDate += '.' + millisecondsStr;
+      // Append milliseconds to the formatted date
+      formattedDate += '.' + millisecondsStr;
       return `${formattedDate}`;
     }
   };
@@ -139,7 +139,7 @@ export class WaterfallPanel extends PureComponent<Props> {
         <textarea id="jsonData" placeholder="Paste your JSON data here..."></textarea>
         <button onClick={this.handleLoadData}>Load Data</button>
         <button className="collapsible" onClick={this.handleCollapsibleClick}>Toggle Collapsible</button>
-        <div className="content" style={{display: 'none'}}>
+        <div className="content" style={{ display: 'none' }}>
           {/* Content here */}
         </div>
         <div id="visualization" style={{ width: '100%', height: '80vh', border: '1px solid lightgray' }}></div>
