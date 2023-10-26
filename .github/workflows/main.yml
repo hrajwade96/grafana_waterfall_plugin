@@ -1,0 +1,57 @@
+name: Package Source Code
+
+on:
+  push:
+    branches:
+      - 'main' 
+    tags:
+      - 'v1.0.0' # Run workflow on version tags, e.g. v1.0.0.
+
+jobs:
+  package-source:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Get plugin metadata
+        id: metadata
+        run: |
+          sudo apt-get install jq
+
+          GRAFANA_PLUGIN_ID=$(jq -r .id dist/plugin.json)
+          GRAFANA_PLUGIN_VERSION=$(jq -r .info.version dist/plugin.json)
+          GRAFANA_PLUGIN_SOURCE_ARCHIVE=${GRAFANA_PLUGIN_ID}-${GRAFANA_PLUGIN_VERSION}-source.zip
+
+          echo "plugin-id=${GRAFANA_PLUGIN_ID}" >> $GITHUB_OUTPUT
+          echo "plugin-version=${GRAFANA_PLUGIN_VERSION}" >> $GITHUB_OUTPUT
+          echo "source-archive=${GRAFANA_PLUGIN_SOURCE_ARCHIVE}" >> $GITHUB_OUTPUT
+
+      - name: Package source code
+        run: |
+          zip -r ${{ steps.metadata.outputs.source-archive }} . -x "*.git*"
+
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          name: "Release v${{ steps.metadata.outputs.plugin-version }}"
+          body: "Source code for version ${{ steps.metadata.outputs.plugin-version }}"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: true
+          files: |
+            ./${{ steps.metadata.outputs.source-archive }}
+
