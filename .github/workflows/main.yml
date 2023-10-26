@@ -60,8 +60,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: >-
           gh release create ${{ github.ref_name }}
-        "release.zip#Whatever you want to call this artifact"
-        --generate-notes
-        --title "Version ${{ github.ref_name }} (or some other name)"
+          "release.zip#Whatever you want to call this artifact"
+          --generate-notes
+          --title "Version ${{ github.ref_name }} (or some other name)"
 
         
